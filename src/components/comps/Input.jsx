@@ -4,14 +4,19 @@ import css from "../../styles/form.css";
 const { Input } = css;
 
 const InputComponent = (props) => {
-  const { placeholder, maxLength } = props.params;
+  const { placeholder, inputValue, action } = props;
 
   return (
     <React.Fragment>
       <Input
+        value={inputValue}
         type={"text"}
         placeholder={placeholder}
-        maxLength={maxLength}
+        maxLength={"100"}
+        onChange={(event) => {
+          const newValue = event.target.value;
+          action(newValue);
+        }}
       ></Input>
     </React.Fragment>
   );
