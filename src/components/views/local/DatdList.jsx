@@ -3,19 +3,21 @@ import css from "../../../styles/dataList.css";
 
 const { DataContainer, ContentLine, ContentCell } = css;
 
-const DataList = () => {
+const DataList = (props) => {
+  const { data = [] } = props;
+
   return (
     <React.Fragment>
       <DataContainer>
-        {Array(4)
-          .fill(null)
-          .map((item, index) => {
-           return ( <ContentLine>
-              <ContentCell width={"20%"}>{"10000"}</ContentCell>
-              <ContentCell width={"20%"}>{"доход"}</ContentCell>
-              <ContentCell width={"60%"}>{"раздавал листовки"}</ContentCell>
-            </ContentLine> )
-          })}
+        {data.map((item, index) => {
+          return (
+            <ContentLine key={index}>
+              <ContentCell width={"20%"}>{item.split("::")[0]}</ContentCell>
+              <ContentCell width={"20%"}>{item.split("::")[1]}</ContentCell>
+              <ContentCell width={"60%"}>{item.split("::")[2]}</ContentCell>
+            </ContentLine>
+          );
+        })}
       </DataContainer>
     </React.Fragment>
   );

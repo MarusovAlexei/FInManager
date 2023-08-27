@@ -8,14 +8,24 @@ import css from "../../styles/form.css";
 const { FormContainer, Button } = css;
 
 const Main = () => {
+  // state of input in the form
   const [value, setValue] = useState("");
   const [type, setType] = useState("");
   const [comment, setComment] = useState("");
 
+  // state of the list of entered data
+  const [data, setData] = useState([]);
+
+  // the correctness of the entered data
   const validation = () => {
     if (value !== "" && type !== "" && comment !== "") {
       alert("valid true");
 
+      // add dataLine in list
+      const dataLine = `${value}::${type}::${comment}`;
+      setData((prev) => [...prev, dataLine]);
+
+      // refresh input value
       setValue("");
       setType("");
       setComment("");
@@ -58,7 +68,7 @@ const Main = () => {
           Сохранить транзакцию
         </Button>
       </FormContainer>
-      <DataList></DataList>
+      <DataList data={data} />
       <Foot></Foot>
     </React.Fragment>
   );
