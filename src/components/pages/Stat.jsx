@@ -1,14 +1,15 @@
-import React from "react";
-import Head from "../views/global/Head";
-import Foot from "../views/global/Foot";
+import React, { useState } from "react";
 import DataList from "../views/local/DatdList";
+import DataChart from "../views/local/DataChart";
 
-const Stat = () => {
+const Stat = (props) => {
+  const { statData } = props;
+  const [isShowChart, setIsShowChart] = useState(false);
+
   return (
     <React.Fragment>
-      <Head></Head>
-      <DataList data={[]}></DataList>
-      <Foot></Foot>
+      <DataList data={statData} setShowChart={setIsShowChart} />
+      <DataChart data={statData} show={isShowChart} />
     </React.Fragment>
   );
 };
