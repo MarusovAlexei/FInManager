@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import css from "../../../styles/dataList.css";
 
 const { DataContainer, ContentLine, ContentCell, ButtonsLine, ButtonItem } =
   css;
 
 const DataList = (props) => {
-  const { data = [], setShowChart } = props;
-  const [dataType, setDataType] = useState("доход");
-  const filterData = data.filter((item) => item.split("::")[1] === dataType);
+  const { data = [], setShowChart, viewType } = props;
+  const navigate = useNavigate();
+  const filterData = data.filter((item) => item.split("::")[1] === viewType);
   const filterDataSumm = data
-    .filter((item) => item.split("::")[1] === dataType)
+    .filter((item) => item.split("::")[1] === viewType)
     .reduce((summ, item) => {
       return summ + +item.split("::")[0].split(" ")[0];
     }, 0);
@@ -24,34 +25,36 @@ const DataList = (props) => {
 
   const reduceDataType1 = () => {
     setShowChart(false);
-    setDataType("доход");
+    navigate("/stat/доход");
   };
+
   const reduceDataType2 = () => {
     setShowChart(true);
-    setDataType("расход");
+    navigate("/stat/расход");
   };
+
   const reduceDataType3 = () => {
     setShowChart(true);
-    setDataType("");
+    navigate("/stat/общая");
   };
 
   return (
     <React.Fragment>
       <ButtonsLine>
         <ButtonItem
-          style={{ fontWeight: dataType === "доход" ? "bold" : "" }}
+          style={{ fontWeight: viewType === "доход" ? "bold" : "" }}
           onClick={reduceDataType1}
         >
           доходы
         </ButtonItem>
         <ButtonItem
-          style={{ fontWeight: dataType === "расход" ? "bold" : "" }}
+          style={{ fontWeight: viewType === "расход" ? "bold" : "" }}
           onClick={reduceDataType2}
         >
           расходы
         </ButtonItem>
         <ButtonItem
-          style={{ fontWeight: dataType === "" ? "bold" : "" }}
+          style={{ fontWeight: viewType === " " ? "bold" : "" }}
           onClick={reduceDataType3}
         >
           общая информация
@@ -87,13 +90,13 @@ const DataList = (props) => {
                 </ContentLine>
               );
             })}
+            <ContentLine>
+              <ContentCell width={"20%"}>{filterDataDelta}</ContentCell>
+              <ContentCell width={"20%"}>---</ContentCell>
+              <ContentCell width={"60%"}>---</ContentCell>
+            </ContentLine>
           </React.Fragment>
         )}
-        <ContentLine>
-          <ContentCell width={"20%"}>{filterDataDelta}</ContentCell>
-          <ContentCell width={"20%"}>---</ContentCell>
-          <ContentCell width={"60%"}>---</ContentCell>
-        </ContentLine>
       </DataContainer>
     </React.Fragment>
   );

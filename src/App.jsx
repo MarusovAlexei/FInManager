@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import Head from "./components/views/global/Head";
 import Foot from "./components/views/global/Foot";
 import Main from "./components/pages/Main";
@@ -6,22 +7,20 @@ import Stat from "./components/pages/Stat";
 import Plan from "./components/pages/Plan";
 
 function App() {
-  const [showPage, setShowPage] = useState("main");
-
   // state of the list of entered data
   const [data, setData] = useState([]);
 
   return (
     <React.Fragment>
-      <Head action={setShowPage}></Head>
-      {showPage === "main" ? (
-        <Main action={setData}></Main>
-      ) : showPage === "stat" ?(
-        <Stat statData={data}></Stat>
-      ):(
-        <Plan statData={data}></Plan>
-      )
-      }
+      <Head></Head>
+
+      <Routes>
+        <Route path={"/main"} element={<Main action={setData} />} />
+        <Route path={"*"} element={<Main action={setData} />} />
+        <Route path={"/stat/:viewType"} element={<Stat statData={data} />} />
+        <Route path={"/plan"} element={<Plan />} />
+      </Routes>
+
       <Foot></Foot>
     </React.Fragment>
   );
