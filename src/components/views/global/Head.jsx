@@ -26,7 +26,9 @@ const Head = (props) => {
           <button onClick={() => action("stat")} style={buttonCSS}>
             Статистика
           </button>
-          <button style={buttonCSS}>Планирование</button>
+          <button onClick={() => action("plan")} style={buttonCSS}>
+            Планирование
+          </button>
         </HeaderCSS.MenuContainer>
       </HeaderContainer>
     </React.Fragment>

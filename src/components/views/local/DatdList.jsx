@@ -15,9 +15,6 @@ const DataList = (props) => {
     }, 0);
 
   const filterDataDelta = data.reduce((summ, item) => {
-    {
-      setShowChart();
-    }
     if (item.split("::")[1] === "доход") {
       return summ + +item.split("::")[0].split(" ")[0];
     } else {
@@ -48,7 +45,7 @@ const DataList = (props) => {
           доходы
         </ButtonItem>
         <ButtonItem
-          style={{ fontWeight: dataType === "расход" ? "bold" :  "" }}
+          style={{ fontWeight: dataType === "расход" ? "bold" : "" }}
           onClick={reduceDataType2}
         >
           расходы

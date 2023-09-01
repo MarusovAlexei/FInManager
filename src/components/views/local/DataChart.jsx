@@ -200,7 +200,7 @@ const DataChart = (props) => {
                 value: r06,
                 color: "hsl(70, 70%, 60%)",
               },
-            ]}
+            ].filter(item => item.value > 0)}
           ></MyResponsivePie>
         </DataContainer>
       )}
