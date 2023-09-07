@@ -1,15 +1,16 @@
 import React from "react";
+import DataList from "../views/local/DatdList";
 
-const Plan = () => {
-  return (
-    <React.Fragment>
-      <span
-        style={{ display: "block", marginTop: "100px", marginLeft: "130px" }}
-      >
-        plan
-      </span>
-    </React.Fragment>
-  );
-};
+export default class Plan extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default Plan;
+  render() {
+    return (
+      <>
+        <DataList data={this.props.statData} viewType={"расход"} />
+      </>
+    );
+  }
+}

@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import InputComponent from "../comps/Input";
 import css from "../../styles/form.css";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  changeViewType,
+  changeComment,
+  changeValue,
+} from "../../redux-state/reducers/view-type-for-main";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -13,39 +20,48 @@ const { FormContainer, Button } = css;
 const Main = (props) => {
   const { action } = props;
 
-  // state of input in the form
-  const [value, setValue] = useState("");
-  const [type, setType] = useState("доход");
-  const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
+  const viewType = useSelector((state) => state.viewTypeMain.viewType);
+  const viewValue = useSelector((state) => state.viewTypeMain.value);
+  const viewComment = useSelector((state) => state.viewTypeMain.comment);
 
   // the correctness of the entered data
   const validation = () => {
-    if (value !== "" && type !== "" && comment !== "") {
+    if (viewValue !== "" && viewType !== "" && viewComment !== "") {
       // add dataLine in list
-      const dataLine = `${value}::${type}::${comment}`;
-      action((prev) => [...prev, dataLine]);
+      const dataLine = `${viewValue}::${viewType}::${viewComment}`;
+
+      action(dataLine);
 
       // refresh input value
-      setValue("");
-      setType("доход");
-      setComment("");
+      dispatch(changeValue(""));
+      dispatch(changeViewType("доход"));
+      dispatch(changeComment(""));
     }
   };
 
   const handleChange = (event) => {
-    setType(event.target.value);
+    dispatch(changeViewType(event.target.value));
   };
 
-  const handleChangeComment = (event) => {
-    setComment(event.target.value);
+  const handleChangeValue = (param) => {
+    dispatch(changeValue(param));
+  };
+
+  const handleChangeComment = (param) => {
+    dispatch(changeComment(param));
+  };
+
+  const handleChangeCommentRadio = (event) => {
+    dispatch(changeComment(event.target.value));
   };
 
   return (
     <React.Fragment>
       <FormContainer style={{ alignItems: "flex-start" }}>
         <InputComponent
-          inputValue={value}
-          action={setValue}
+          inputValue={viewValue}
+          action={handleChangeValue}
           placeholder={"Введите сумму транзакции"}
         />
         <FormControl style={{ marginTop: "9px", marginBottom: "12px" }}>
@@ -55,7 +71,7 @@ const Main = (props) => {
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             name="radio-buttons-group"
-            value={type}
+            value={viewType}
             onChange={handleChange}
             style={{ marginTop: "5px", marginLeft: "6px" }}
           >
@@ -68,14 +84,14 @@ const Main = (props) => {
           </RadioGroup>
         </FormControl>
 
-        {type === "доход" && (
+        {viewType === "доход" && (
           <InputComponent
-            inputValue={comment}
-            action={setComment}
+            inputValue={viewComment}
+            action={handleChangeComment}
             placeholder={"Введите комментарий"}
           />
         )}
-        {type === "расход" && (
+        {viewType === "расход" && (
           <FormControl style={{ marginTop: "9px", marginBottom: "12px" }}>
             <FormLabel id="demo-radio-buttons-group-label">
               Выберите тип расходов
@@ -83,8 +99,8 @@ const Main = (props) => {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
-              value={comment}
-              onChange={handleChangeComment}
+              value={viewComment}
+              onChange={handleChangeCommentRadio}
               style={{ marginTop: "5px", marginLeft: "6px" }}
             >
               <FormControlLabel
@@ -122,11 +138,11 @@ const Main = (props) => {
         )}
         <Button
           backgroundColor={
-            value === ""
+            viewValue === ""
               ? "rgb(229, 229, 229)"
-              : type === ""
+              : viewType === ""
               ? "rgb(229, 229, 229)"
-              : comment === ""
+              : viewComment === ""
               ? "rgb(229, 229, 229)"
               : "rgb(176, 243, 71)"
           }
