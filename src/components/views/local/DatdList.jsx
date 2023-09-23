@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import css from "../../../styles/dataList.css";
 
 const { DataContainer, ContentLine, ContentCell, ButtonsLine, ButtonItem } =
   css;
 
-const DataList = (props) => {
-  const { data = [], setShowChart, viewType } = props;
-  const navigate = useNavigate();
-  const filterData = data.filter((item) => item.split("::")[1] === viewType);
-  const filterDataSumm = data
-    .filter((item) => item.split("::")[1] === viewType)
+const dataSumm = (paramData, view) => {
+  const returned = paramData
+    .filter((item) => item.split("::")[1] === view)
     .reduce((summ, item) => {
       return summ + +item.split("::")[0].split(" ")[0];
     }, 0);
+
+  return returned;
+};
+
+const DataList = (props) => {
+  const { data = [], setShowChart, viewType } = props;
+  const navigate = useNavigate();
+  const [bold, setBold] = useState(false);
+  const filterData = data.filter((item) => item.split("::")[1] === viewType);
+  const filterDataSumm = useCallback(
+    () => dataSumm(data, viewType),
+    [data, viewType]
+  );
 
   const filterDataDelta = data.reduce((summ, item) => {
     if (item.split("::")[1] === "доход") {
@@ -73,7 +83,13 @@ const DataList = (props) => {
               );
             })}
             <ContentLine>
-              <ContentCell width={"20%"}>{filterDataSumm}</ContentCell>
+              <ContentCell
+                width={"20%"}
+                onClick={() => setBold(!bold)}
+                style={{ fontWeight: bold && "bold" }}
+              >
+                {filterDataSumm}
+              </ContentCell>
               <ContentCell width={"20%"}>---</ContentCell>
               <ContentCell width={"60%"}>---</ContentCell>
             </ContentLine>
@@ -83,7 +99,7 @@ const DataList = (props) => {
           <React.Fragment>
             {data.map((item, index) => {
               return (
-                <ContentLine key={index}>
+                <ContentLine key={index} style={{ marginBottom: "10px" }}>
                   <ContentCell width={"20%"}>{item.split("::")[0]}</ContentCell>
                   <ContentCell width={"20%"}>{item.split("::")[1]}</ContentCell>
                   <ContentCell width={"60%"}>{item.split("::")[2]}</ContentCell>

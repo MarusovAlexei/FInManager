@@ -6,7 +6,9 @@ const { FooterContainer } = css;
 const Foot = () => {
   return (
     <React.Fragment>
-      <FooterContainer></FooterContainer>
+      <FooterContainer
+        style={{ justifyContent: "space-around", fontSize: "14px" }}
+      ></FooterContainer>
     </React.Fragment>
   );
 };

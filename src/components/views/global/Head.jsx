@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import css from "../../../styles/styles.css";
 
+import HOCButton from "../../comps/HOCHeaderButton";
+import Button from "../../comps/Button";
+
+const HOCButtonComponent = HOCButton(Button);
+
 const { HeaderContainer, HeaderCSS } = css;
 
 const buttonCSS = {
@@ -19,26 +24,21 @@ const Head = () => {
       <HeaderContainer>
         <HeaderCSS.Logo>FinManager</HeaderCSS.Logo>
         <HeaderCSS.MenuContainer>
-          <Link
-            to={"/main"}
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <button style={buttonCSS}>Главная</button>
-          </Link>
-
-          <Link
-            to={"/stat/расход"}
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <button style={buttonCSS}>Статистика</button>
-          </Link>
-
-          <Link
-            to={"/plan"}
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <button style={buttonCSS}>Планирование</button>
-          </Link>
+          <HOCButtonComponent
+            text={"/main"}
+            onClick={() => {}}
+            inner={"Главная"}
+          />
+          <HOCButtonComponent
+            text={"/stat/расход"}
+            onClick={() => {}}
+            inner={"Статистика"}
+          />
+          <HOCButtonComponent
+            text={"/plan"}
+            onClick={() => {}}
+            inner={"Планирование"}
+          />
         </HeaderCSS.MenuContainer>
       </HeaderContainer>
     </React.Fragment>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import InputComponent from "../comps/Input";
 import css from "../../styles/form.css";
 
@@ -9,16 +9,23 @@ import {
   changeValue,
 } from "../../redux-state/reducers/view-type-for-main";
 
+import Foot from "./../views/global/Foot";
+import FooterContext from "../../redux-state/context/footerContext";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import useNumberValueFormat from "../../hooks/useNumberValueFormat";
 
-const { FormContainer, Button } = css;
+const { FormContainer, Button, Input } = css;
 
 const Main = (props) => {
   const { action } = props;
+
+  const valueInput = useRef();
+  const [footerText] = useState("textTEXTtext");
+  const [formatValue, formating] = useNumberValueFormat();
 
   const dispatch = useDispatch();
   const viewType = useSelector((state) => state.viewTypeMain.viewType);
@@ -27,9 +34,9 @@ const Main = (props) => {
 
   // the correctness of the entered data
   const validation = () => {
-    if (viewValue !== "" && viewType !== "" && viewComment !== "") {
+    if (formatValue !== "" && viewType !== "" && viewComment !== "") {
       // add dataLine in list
-      const dataLine = `${viewValue}::${viewType}::${viewComment}`;
+      const dataLine = `${formatValue}::${viewType}::${viewComment}`;
 
       action(dataLine);
 
@@ -56,14 +63,48 @@ const Main = (props) => {
     dispatch(changeComment(event.target.value));
   };
 
+  const setFocus = () => {
+    valueInput.current.disabled = false;
+    valueInput.current.focus();
+  };
+
   return (
     <React.Fragment>
       <FormContainer style={{ alignItems: "flex-start" }}>
-        <InputComponent
-          inputValue={viewValue}
-          action={handleChangeValue}
+        {/*react useRef -------------------------------------------------*/}
+
+        <Button
+          backgroundColor={"rgb(176, 243, 71)"}
+          onClick={setFocus}
+          style={{ marginBottom: "12px" }}
+        >
+          Начать заполнение
+        </Button>
+
+        <Input
+          ref={valueInput}
+          value={viewValue}
+          type={"text"}
           placeholder={"Введите сумму транзакции"}
+          maxLength={"100"}
+          disabled
+          onChange={(event) => {
+            const newValue = event.target.value;
+            formating(newValue);
+            handleChangeValue(newValue);
+          }}
         />
+
+        {/*react useRef -------------------------------------------------*/}
+
+        {false && (
+          <InputComponent
+            inputValue={viewValue}
+            action={handleChangeValue}
+            placeholder={"Введите сумму транзакции"}
+          />
+        )}
+
         <FormControl style={{ marginTop: "9px", marginBottom: "12px" }}>
           <FormLabel id="demo-radio-buttons-group-label">
             Выберите тип транзакции
@@ -151,6 +192,18 @@ const Main = (props) => {
           Сохранить транзакцию
         </Button>
       </FormContainer>
+      {false && (
+        <FooterContext.Provider value={footerText}>
+          <Foot></Foot>
+        </FooterContext.Provider>
+      )}
+      {true && (
+        <FooterContext.Provider value={footerText}>
+          <FooterContext.Consumer>
+            {(value) => <Foot>{value}</Foot>}
+          </FooterContext.Consumer>
+        </FooterContext.Provider>
+      )}
     </React.Fragment>
   );
 };

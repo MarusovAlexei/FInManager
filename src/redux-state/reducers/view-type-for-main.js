@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   viewType: "доход",
   value: "",
-  Comment: "",
+  comment: "",
 };
 
 export const viewTypeMainReducer = createSlice({
@@ -17,7 +17,7 @@ export const viewTypeMainReducer = createSlice({
       state.value = action.payload;
     },
     changeComment: (state, action) => {
-      state.Comment = action.payload;
+      state.comment = action.payload;
     },
   },
 });
