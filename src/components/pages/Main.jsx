@@ -24,9 +24,10 @@ const Main = (props) => {
   const { action } = props;
 
   const valueInput = useRef();
-  const [footerText] = useState("textTEXTtext");
+  const [footerText, setFooterText] = useState("FinManager");
   const [formatValue, formating] = useNumberValueFormat();
 
+  // Redax-toolkit
   const dispatch = useDispatch();
   const viewType = useSelector((state) => state.viewTypeMain.viewType);
   const viewValue = useSelector((state) => state.viewTypeMain.value);
@@ -71,8 +72,6 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <FormContainer style={{ alignItems: "flex-start" }}>
-        {/*react useRef -------------------------------------------------*/}
-
         <Button
           backgroundColor={"rgb(176, 243, 71)"}
           onClick={setFocus}
@@ -95,23 +94,13 @@ const Main = (props) => {
           }}
         />
 
-        {/*react useRef -------------------------------------------------*/}
-
-        {false && (
-          <InputComponent
-            inputValue={viewValue}
-            action={handleChangeValue}
-            placeholder={"Введите сумму транзакции"}
-          />
-        )}
-
         <FormControl style={{ marginTop: "9px", marginBottom: "12px" }}>
-          <FormLabel id="demo-radio-buttons-group-label">
+          <FormLabel id="demo-controlled-radio-buttons-group">
             Выберите тип транзакции
           </FormLabel>
           <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            name="radio-buttons-group"
+            aria-labelledby="demo-controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
             value={viewType}
             onChange={handleChange}
             style={{ marginTop: "5px", marginLeft: "6px" }}
@@ -192,16 +181,9 @@ const Main = (props) => {
           Сохранить транзакцию
         </Button>
       </FormContainer>
-      {false && (
-        <FooterContext.Provider value={footerText}>
-          <Foot></Foot>
-        </FooterContext.Provider>
-      )}
       {true && (
-        <FooterContext.Provider value={footerText}>
-          <FooterContext.Consumer>
-            {(value) => <Foot>{value}</Foot>}
-          </FooterContext.Consumer>
+        <FooterContext.Provider value={[footerText, setFooterText]}>
+          <Foot></Foot>
         </FooterContext.Provider>
       )}
     </React.Fragment>

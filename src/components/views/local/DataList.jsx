@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import css from "../../../styles/dataList.css";
 
@@ -9,7 +9,10 @@ const dataSumm = (paramData, view) => {
   const returned = paramData
     .filter((item) => item.split("::")[1] === view)
     .reduce((summ, item) => {
-      return summ + +item.split("::")[0].split(" ")[0];
+      return (
+        summ +
+        +(item.split("::")[0].split(" ")[0] + item.split("::")[0].split(" ")[1])
+      );
     }, 0);
 
   return returned;
@@ -20,16 +23,22 @@ const DataList = (props) => {
   const navigate = useNavigate();
   const [bold, setBold] = useState(false);
   const filterData = data.filter((item) => item.split("::")[1] === viewType);
-  const filterDataSumm = useCallback(
+  const filterDataSumm = useMemo(
     () => dataSumm(data, viewType),
     [data, viewType]
   );
 
   const filterDataDelta = data.reduce((summ, item) => {
     if (item.split("::")[1] === "доход") {
-      return summ + +item.split("::")[0].split(" ")[0];
+      return (
+        summ +
+        +(item.split("::")[0].split(" ")[0] + item.split("::")[0].split(" ")[1])
+      );
     } else {
-      return summ - +item.split("::")[0].split(" ")[0];
+      return (
+        summ -
+        +(item.split("::")[0].split(" ")[0] + item.split("::")[0].split(" ")[1])
+      );
     }
   }, 0);
 
@@ -45,7 +54,7 @@ const DataList = (props) => {
 
   const reduceDataType3 = () => {
     setShowChart(true);
-    navigate("/stat/общая");
+    navigate("/stat/общее");
   };
 
   return (
@@ -67,7 +76,7 @@ const DataList = (props) => {
           style={{ fontWeight: viewType === " " ? "bold" : "" }}
           onClick={reduceDataType3}
         >
-          общая информация
+          общее
         </ButtonItem>
       </ButtonsLine>
       <DataContainer>
@@ -75,7 +84,7 @@ const DataList = (props) => {
           <React.Fragment>
             {filterData.map((item, index) => {
               return (
-                <ContentLine key={index}>
+                <ContentLine key={index} style={{ marginBottom: "10px" }}>
                   <ContentCell width={"20%"}>{item.split("::")[0]}</ContentCell>
                   <ContentCell width={"20%"}>{item.split("::")[1]}</ContentCell>
                   <ContentCell width={"60%"}>{item.split("::")[2]}</ContentCell>

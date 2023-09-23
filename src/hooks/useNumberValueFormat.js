@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useNumberValueFormat = () => {
-  const [formatValue, setFormateValue] = useState("");
+const useNumberValueFormat = (stringValue) => {
+  const [formatValue, setFormatValue] = useState("");
 
   const formating = (stringValue) => {
     let enterString = stringValue;
@@ -14,10 +14,10 @@ const useNumberValueFormat = () => {
           exitString = enterString[0] + " " + enterString.slice(1);
           break;
         case 5:
-          exitString = enterString[(0, 2)] + " " + enterString.slice(2);
+          exitString = enterString.slice(0, 2) + " " + enterString.slice(2);
           break;
         case 6:
-          exitString = enterString[(0, 3)] + " " + enterString.slice(3);
+          exitString = enterString.slice(0, 3) + " " + enterString.slice(3);
           break;
         case 7:
           exitString =
@@ -29,18 +29,19 @@ const useNumberValueFormat = () => {
           break;
         case 8:
           exitString =
-            enterString[(0, 2)] +
+            enterString.slice(0, 2) +
             " " +
             enterString.slice(2, 5) +
             " " +
             enterString.slice(5);
+          break;
         default:
           exitString = enterString;
           break;
       }
     }
 
-    setFormateValue(exitString);
+    setFormatValue(exitString);
   };
 
   return [formatValue, formating];

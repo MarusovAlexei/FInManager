@@ -138,22 +138,64 @@ const DataChart = (props) => {
   useEffect(() => {
     for (let i = 0; i < filterData.length; i++) {
       if (filterData[i].split("::")[2] === "покупка продуктов") {
-        setR01((prev) => prev + +filterData[i].split("::")[0]);
+        setR01(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
       if (filterData[i].split("::")[2] === "оплата счетов") {
-        setR02((prev) => prev + +filterData[i].split("::")[0]);
+        setR02(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
       if (filterData[i].split("::")[2] === "покупка одежды") {
-        setR03((prev) => prev + +filterData[i].split("::")[0]);
+        setR03(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
       if (filterData[i].split("::")[2] === "расходы на транспорт") {
-        setR04((prev) => prev + +filterData[i].split("::")[0]);
+        setR04(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
       if (filterData[i].split("::")[2] === "развлечения") {
-        setR05((prev) => prev + +filterData[i].split("::")[0]);
+        setR05(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
       if (filterData[i].split("::")[2] === "путешествия") {
-        setR06((prev) => prev + +filterData[i].split("::")[0]);
+        setR06(
+          (prev) =>
+            prev +
+            +(
+              filterData[i].split("::")[0].split(" ")[0] +
+              filterData[i].split("::")[0].split(" ")[1]
+            )
+        );
       }
     }
   }, []);
@@ -200,7 +242,7 @@ const DataChart = (props) => {
                 value: r06,
                 color: "hsl(70, 70%, 60%)",
               },
-            ].filter(item => item.value > 0)}
+            ].filter((item) => item.value > 0)}
           ></MyResponsivePie>
         </DataContainer>
       )}
