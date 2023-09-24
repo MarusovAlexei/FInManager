@@ -27,5 +27,5 @@ To display the chart, enter multiple expenses and income values.
 
 ## Scrins app:
 
-![Main page]()
-![Stat page]()
+![Main page](https://github.com/MarusovAlexei/FInManager/blob/master/src/Illustration/main.PNG)  
+![Stat page](https://github.com/MarusovAlexei/FInManager/blob/master/src/Illustration/stat.PNG)
