@@ -25,7 +25,8 @@ The input field is activated by pressing the "Начать заполнение"
 
 ## Install:
 
-1. npm run start
+1. npm i
+2. npm run start
 
 ## Scrins app:
 
