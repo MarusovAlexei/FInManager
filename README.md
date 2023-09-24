@@ -39,6 +39,11 @@ The input field is activated by pressing the "Начать заполнение"
 1. npm i
 2. npm run start
 
+## Planned in the future:
+
+1. Debug mode
+2. Backend
+
 ## Scrins app:
 
 ![Main page](https://github.com/MarusovAlexei/FInManager/blob/master/src/Illustration/main.PNG)  
