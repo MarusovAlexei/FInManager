@@ -7,6 +7,8 @@ Along with this, you will be able to separate expenses and income and clearly se
 
 To display the chart, enter multiple expenses and income values.
 
+The input field is activated by pressing the "Начать заполнение" button. The transaction is saved after clicking on the "Сохранить транзакцию" button.
+
 ## Technologies used:
 
 1. HTML, CSS (styled components), JS
