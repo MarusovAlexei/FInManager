@@ -183,7 +183,7 @@ const Main = (props) => {
       </FormContainer>
       {true && (
         <FooterContext.Provider value={[footerText, setFooterText]}>
-          <Foot></Foot>
+          <Foot>{footerText}</Foot>
         </FooterContext.Provider>
       )}
     </React.Fragment>

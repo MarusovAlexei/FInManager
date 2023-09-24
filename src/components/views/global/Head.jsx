@@ -23,11 +23,6 @@ const Head = () => {
             onClick={() => {}}
             inner={"Статистика"}
           />
-          <HOCButtonComponent
-            text={"/plan"}
-            onClick={() => {}}
-            inner={"Планирование"}
-          />
         </HeaderCSS.MenuContainer>
       </HeaderContainer>
     </React.Fragment>
